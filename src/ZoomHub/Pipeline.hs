@@ -45,7 +45,7 @@ import           ZoomHub.Types.Content                    (Content, contentDZI,
                                                            contentSize,
                                                            contentURL)
 import           ZoomHub.Types.ContentId                  (unId)
-import           ZoomHub.Types.ContentMIME                (ContentMIME (ContentMIME))
+import           ZoomHub.Types.ContentMIME                (ContentMIME, ContentMIME' (ContentMIME))
 import           ZoomHub.Types.ContentURI                 (ContentURI)
 import           ZoomHub.Types.DeepZoomImage              (DeepZoomImage, TileFormat (JPEG, PNG), TileOverlap (TileOverlap1), TileSize (TileSize254),
                                                            dziTileFormat,
