@@ -39,7 +39,7 @@ data Content = Content
   , contentUrl       :: ContentURI
   , contentReady     :: Bool
   , contentFailed    :: Bool
-  , contentProgress  :: Float
+  , contentProgress  :: Double
   , contentShareUrl  :: ContentShareURI
   , contentEmbedHtml :: String
   , contentDzi       :: Maybe DeepZoomImage
