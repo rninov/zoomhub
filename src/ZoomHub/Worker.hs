@@ -33,7 +33,7 @@ import           ZoomHub.Storage.SQLite        (dequeueNextUnprocessed,
                                                 resetAsInitialized,
                                                 withConnection)
 import           ZoomHub.Types.Content         (contentId, contentURL)
-import           ZoomHub.Types.ContentId       (unId)
+import           ZoomHub.Types.ContentId       (unContentId)
 import           ZoomHub.Utils                 (lenientDecodeUtf8)
 
 -- Constants
@@ -97,8 +97,8 @@ processExistingContent config workerId = forever $ do
 
     sleepBase = processExistingContentInterval
 
-    wwwURL c = "http://zoomhub.net/" ++ unId (contentId c)
-    apiURL c = "http://zoomhub.net/v1/content/" ++ unId (contentId c)
+    wwwURL c = "http://zoomhub.net/" ++ unContentId (contentId c)
+    apiURL c = "http://zoomhub.net/v1/content/" ++ unContentId (contentId c)
 
     logT msg meta = logInfoT msg (meta ++ extraLogMeta)
     extraLogMeta =

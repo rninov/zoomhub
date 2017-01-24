@@ -65,7 +65,7 @@ import           ZoomHub.Types.Content          (Content (Content),
                                                  contentProgress, contentSize,
                                                  contentState, contentType,
                                                  contentURL, mkContent)
-import           ZoomHub.Types.ContentId        (ContentId, unId)
+import           ZoomHub.Types.ContentId        (ContentId, unContentId)
 import qualified ZoomHub.Types.ContentId        as ContentId
 import           ZoomHub.Types.ContentMIME      (ContentMIME)
 import           ZoomHub.Types.ContentState     (ContentState (Initialized, Active, CompletedSuccess, CompletedFailure))
@@ -114,10 +114,10 @@ create encodeId uri conn = withTransaction conn $ do
 
 -- TODO: Generalize:
 getById' :: ContentId -> DatabasePath -> Connection -> IO (Maybe Content)
-getById' cId = getBy' "content.hashId" (unId cId)
+getById' cId = getBy' "content.hashId" (unContentId cId)
 
 getById :: ContentId -> Connection -> IO (Maybe Content)
-getById cId = getBy "content.hashId" (unId cId)
+getById cId = getBy "content.hashId" (unContentId cId)
 
 -- TODO: Generalize:
 getByURL :: ContentURI -> Connection -> IO (Maybe Content)
@@ -159,7 +159,7 @@ resetAsInitialized conn cs =
         \ SET state = :initializedState, activeAt = NULL, error = NULL, \
         \ mime = NULL, size = NULL, progress = 0.0 WHERE hashId = :hashId"
         [ ":initializedState" := Initialized
-        , ":hashId" := (unId . contentId) content
+        , ":hashId" := (unContentId . contentId) content
         ]
 
 markAsActive :: Connection -> Content -> IO Content
@@ -211,7 +211,7 @@ markAsSuccess :: Connection -> Content -> IO Content
 markAsSuccess conn content =
   case contentDZI content of
     Nothing -> do
-      let rawId = unId (contentId content)
+      let rawId = unContentId (contentId content)
       fail $ "ZoomHub.Storage.SQLite.markAsSuccess:\
         \ Expected completed content '" ++ rawId ++ "' to have DZI."
     Just dzi -> do

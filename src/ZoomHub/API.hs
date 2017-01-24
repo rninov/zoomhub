@@ -49,7 +49,7 @@ import           ZoomHub.Storage.SQLite               (create, getById,
 import           ZoomHub.Types.BaseURI                (BaseURI, unBaseURI)
 import qualified ZoomHub.Types.Content                as Internal
 import           ZoomHub.Types.ContentBaseURI         (ContentBaseURI)
-import           ZoomHub.Types.ContentId              (ContentId, unId)
+import           ZoomHub.Types.ContentId              (ContentId, unContentId)
 import           ZoomHub.Types.ContentURI             (ContentURI)
 import           ZoomHub.Types.DatabasePath           (DatabasePath)
 import           ZoomHub.Types.StaticBaseURI          (StaticBaseURI)
@@ -310,7 +310,7 @@ webInvalidURLParam _ = throwError . Web.error400 $ invalidURLErrorMessage
 
 -- Helpers
 contentNotFoundMessage :: ContentId -> String
-contentNotFoundMessage contentId = noContentWithIdMessage (unId contentId)
+contentNotFoundMessage contentId = noContentWithIdMessage (unContentId contentId)
 
 noContentWithIdMessage :: String -> String
 noContentWithIdMessage contentId = "No content with ID: " ++ contentId
@@ -357,7 +357,7 @@ webRedirectURI = redirectURI "/"
 
 redirectURI :: String -> BaseURI -> ContentId -> URI
 redirectURI pathPrefix baseURI contentId =
-  (fromJust . parseRelativeReference $ pathPrefix ++ unId contentId)
+  (fromJust . parseRelativeReference $ pathPrefix ++ unContentId contentId)
     `relativeTo` unBaseURI baseURI
 
 -- NOTE: Enable Chrome developer console ‘[x] Disable cache’ to test

@@ -28,7 +28,7 @@ import qualified ZoomHub.API.Types.DeepZoomImage as DZ
 import           ZoomHub.Types.BaseURI           (BaseURI, unBaseURI)
 import qualified ZoomHub.Types.Content           as Internal
 import           ZoomHub.Types.ContentBaseURI    (ContentBaseURI)
-import           ZoomHub.Types.ContentId         (ContentId, unId)
+import           ZoomHub.Types.ContentId         (ContentId, unContentId)
 import           ZoomHub.Types.ContentState      (ContentState (CompletedSuccess, CompletedFailure))
 import           ZoomHub.Types.ContentURI        (ContentURI)
 
@@ -60,7 +60,7 @@ fromInternal baseURI contentBaseURI c = Content
   where
     cId = Internal.contentId c
     shareURI = ContentShareURI $ sharePathURI `relativeTo` unBaseURI baseURI
-    sharePathURI = fromJust . parseRelativeReference $ unId cId
+    sharePathURI = fromJust . parseRelativeReference $ unContentId cId
     scriptSource = show shareURI ++ ".js?width=auto&height=400px"
     embedHTML = "<script src=\"" ++ scriptSource ++ "\"></script>"
     dzi = DZ.fromInternal contentBaseURI cId <$> Internal.contentDZI c

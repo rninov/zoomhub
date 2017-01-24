@@ -21,7 +21,8 @@ import           ZoomHub.Config               (Config (..), ExistingContentStatu
 import qualified ZoomHub.Config               as Config
 import           ZoomHub.Types.BaseURI        (BaseURI (BaseURI))
 import           ZoomHub.Types.ContentBaseURI (mkContentBaseURI)
-import           ZoomHub.Types.ContentId      (ContentId, fromString, unId)
+import           ZoomHub.Types.ContentId      (ContentId, fromString,
+                                               unContentId)
 import           ZoomHub.Types.DatabasePath   (DatabasePath (DatabasePath))
 import           ZoomHub.Types.StaticBaseURI  (StaticBaseURI (StaticBaseURI))
 import           ZoomHub.Types.TempPath       (TempPath (TempPath))
@@ -84,7 +85,7 @@ restRedirect cId =
     }
   where
     baseURIPrefix = show . Config.baseURI $ config
-    expectedLocation = baseURIPrefix ++ "/v1/content/" ++ unId cId
+    expectedLocation = baseURIPrefix ++ "/v1/content/" ++ unContentId cId
 
 viewRedirect :: ContentId -> ResponseMatcher
 viewRedirect cId =
@@ -94,7 +95,7 @@ viewRedirect cId =
     }
   where
     baseURIPrefix = show . Config.baseURI $ config
-    expectedLocation = baseURIPrefix <> "/" <> unId cId
+    expectedLocation = baseURIPrefix <> "/" <> unContentId cId
 
 -- Config
 nullLogger :: Middleware

@@ -14,7 +14,7 @@ import           Test.QuickCheck.Arbitrary (Arbitrary, arbitrary)
 import           Test.QuickCheck.Instances ()
 
 import           ZoomHub.Types.ContentId   (ContentId, fromString, isValid,
-                                            unId, validChars)
+                                            unContentId, validChars)
 
 instance Arbitrary ContentId where
   arbitrary = do
@@ -22,7 +22,7 @@ instance Arbitrary ContentId where
     return $ fromString validId
 
 prop_invertible :: ContentId -> Property
-prop_invertible x = isValid (unId x) ==> (decode . encode) x == Just x
+prop_invertible x = isValid (unContentId x) ==> (decode . encode) x == Just x
 
 main :: IO ()
 main = hspec spec
