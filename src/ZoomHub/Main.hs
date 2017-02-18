@@ -16,6 +16,8 @@ import           Data.Default                         (def)
 import           Data.Maybe                           (fromJust, fromMaybe)
 import           Data.Time.Units                      (Second, toMicroseconds)
 import           Data.Time.Units.Instances            ()
+import           Database.PostgreSQL.Simple           (ConnectInfo (..),
+                                                       defaultConnectInfo)
 import           GHC.Conc                             (getNumProcessors)
 import           Network.BSD                          (getHostName)
 import           Network.URI                          (parseAbsoluteURI)
@@ -124,6 +126,19 @@ main = do
       defaultDBPath = DatabasePath $
         currentDirectory </> "data" </> "zoomhub-development.sqlite3"
       dbPath = maybe defaultDBPath DatabasePath (lookup dbPathEnvName env)
+
+      defaultDBHost = connectHost defaultConnectInfo
+      defaultDBPort = connectPort defaultConnectInfo
+      defaultDBUser = connectUser defaultConnectInfo
+      defaultDBPassword = connectPassword defaultConnectInfo
+      defaultDBName = "zoomhub_development"
+      dbConnectInfo = ConnectInfo {
+        connectHost = fromMaybe defaultDBHost (lookup "PGHOST" env)
+      , connectPort = fromMaybe defaultDBPort (lookup "PGPORT" env >>= readMaybe)
+      , connectUser = fromMaybe defaultDBUser (lookup "PGUSER" env)
+      , connectPassword = fromMaybe defaultDBPassword (lookup "PGPASSWORD" env)
+      , connectDatabase = fromMaybe defaultDBName (lookup "PGDATABASE" env)
+      }
 
       defaultPublicPath = currentDirectory </> "public"
       publicPath = fromMaybe defaultPublicPath (lookup publicPathEnvName env)
