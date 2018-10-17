@@ -55,6 +55,6 @@ spec =
             initializedContentWithViews = initializedContent
               { contentNumViews = 100
               }
-        _ <- runPQ (create initializedContent) conn
+        _ <- runPQ (create initializedContentWithViews) conn
         (result, _) <- runPQ (getById cid) conn
         result `shouldBe` (Just initializedContentWithViews)
