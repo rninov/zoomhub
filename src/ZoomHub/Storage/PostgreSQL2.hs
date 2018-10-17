@@ -169,13 +169,13 @@ rowToContent cr = Content
     , contentError = crError cr
     , contentDZI = Nothing
     }
-  where
-    -- mDZI = mkDeepZoomImage <$>
-    --   (fromIntegral <$> irWidth cr) <*>
-    --   (fromIntegral <$> irHeight cr) <*>
-    --   irTileSize cr <*>
-    --   irTileOverlap cr <*>
-    --   irTileFormat cr
+  -- where
+  --   mDZI = mkDeepZoomImage <$>
+  --     (fromIntegral <$> irWidth cr) <*>
+  --     (fromIntegral <$> irHeight cr) <*>
+  --     irTileSize cr <*>
+  --     irTileOverlap cr <*>
+  --     irTileFormat cr
 
 contentToRow :: Content -> ContentRow
 contentToRow c = ContentRow
@@ -203,8 +203,8 @@ contentToRow c = ContentRow
     -- , irTileOverlap = dziTileOverlap <$> dzi
     -- , irTileFormat = dziTileFormat <$> dzi
     }
-  where
-    -- dzi = contentDZI c
+  -- where
+  --   dzi = contentDZI c
 
 insertContent :: Manipulation Schema (TuplePG ContentRow) '[ "fromOnly" ::: 'NotNull 'PGtext ]
 insertContent = insertRow #content
