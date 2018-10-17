@@ -20,6 +20,7 @@ import           Data.Aeson.Casing            (aesonPrefix, camelCase)
 import           Data.Maybe                   (fromMaybe)
 import qualified Data.Text                    as T
 import           GHC.Generics                 (Generic)
+import qualified Generics.SOP as SOP
 import           Network.URI                  (URI, parseRelativeReference,
                                                relativeTo)
 import           System.FilePath              ((<.>), (</>))
@@ -86,3 +87,7 @@ instance Show DeepZoomImageURI where
 
 instance ToJSON DeepZoomImageURI where
   toJSON = String . T.pack . show . unDeepZoomImageURI
+
+-- PostgreSQL / Squeal
+instance SOP.Generic DeepZoomImage
+instance SOP.HasDatatypeInfo DeepZoomImage
